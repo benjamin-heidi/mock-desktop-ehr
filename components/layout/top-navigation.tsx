@@ -34,9 +34,9 @@ const MODULES: Array<{ id: ActiveModule; label: string }> = [
 export default function TopNavigation({ activeModule, onModuleChange, onToggleSidebar }: TopNavigationProps) {
 
   return (
-    <nav className="bg-surface border-b border-soft h-16 flex items-center justify-between px-6 gap-4 sticky top-0 z-40 shadow-sm">
+    <nav className="bg-surface border-b border-soft h-16 flex items-center px-6 gap-4 sticky top-0 z-40 shadow-sm overflow-hidden">
       {/* Left: Logo and Sidebar Toggle */}
-      <div className="flex items-center gap-4 min-w-max">
+      <div className="flex items-center gap-4 flex-shrink-0">
         <button
           onClick={onToggleSidebar}
           className="p-2 hover:bg-neutral-100 rounded-lg transition-colors"
@@ -56,12 +56,12 @@ export default function TopNavigation({ activeModule, onModuleChange, onToggleSi
       </div>
 
       {/* Center: Module Navigation */}
-      <div className="flex items-center gap-0.5 flex-wrap">
+      <div className="flex items-center gap-0.5 flex-1 min-w-0 overflow-x-auto scrollbar-hide">
         {MODULES.map((module) => (
           <button
             key={module.id}
             onClick={() => onModuleChange(module.id)}
-            className={`px-3 py-2 text-sm font-medium rounded-md transition-all ${
+            className={`px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap flex-shrink-0 ${
               activeModule === module.id
                 ? "text-primary bg-neutral-100"
                 : "text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50"
@@ -74,7 +74,7 @@ export default function TopNavigation({ activeModule, onModuleChange, onToggleSi
       </div>
 
       {/* Right: Notifications */}
-      <div className="flex items-center gap-2 ml-auto min-w-max">
+      <div className="flex items-center gap-2 flex-shrink-0">
         <button className="p-2 hover:bg-neutral-100 rounded-lg transition-colors relative" title="Notifications">
           <Bell className="w-5 h-5 text-neutral-600" />
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
