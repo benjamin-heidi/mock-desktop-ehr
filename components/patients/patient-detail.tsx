@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { X, Minimize2 } from "lucide-react"
 
 interface Patient {
@@ -22,17 +22,26 @@ interface PatientDetailProps {
   isFullscreen?: boolean
 }
 
-type ActiveTab = "summary" | "consultations" | "medications" | "labs"
+type ActiveTab = "summary" | "consultations" | "medications" | "labs" | "imaging"
 
 export default function PatientDetail({ patient, onClose, onMinimize, isFullscreen = false }: PatientDetailProps) {
   const [activeTab, setActiveTab] = useState<ActiveTab>("summary")
+  const [uploadDone, setUploadDone] = useState(false)
 
   const tabs: Array<{ id: ActiveTab; label: string }> = [
     { id: "summary", label: "Summary" },
     { id: "consultations", label: "Consultations" },
     { id: "medications", label: "Medications" },
     { id: "labs", label: "Labs" },
+    { id: "imaging", label: "Imaging" },
   ]
+
+  // Reset upload state when switching away from imaging tab
+  useEffect(() => {
+    if (activeTab !== "imaging") {
+      setUploadDone(false)
+    }
+  }, [activeTab])
 
   return (
     <div className="flex flex-col h-full bg-surface">
@@ -165,6 +174,24 @@ export default function PatientDetail({ patient, onClose, onMinimize, isFullscre
             <div className="bg-neutral-50 rounded-lg p-4">
               <h4 className="font-semibold text-neutral-900 mb-2">Lab Results</h4>
               <p className="text-sm text-neutral-600">No lab results recorded</p>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "imaging" && (
+          <div className="space-y-4">
+            <div className="bg-neutral-50 rounded-lg p-4">
+              <h4 className="font-semibold text-neutral-900 mb-4"></h4>
+              {!uploadDone ? (
+                <button
+                  onClick={() => setUploadDone(true)}
+                  className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors"
+                >
+                  Upload Image
+                </button>
+              ) : (
+                <p className="text-sm text-neutral-900 font-medium">Done</p>
+              )}
             </div>
           </div>
         )}

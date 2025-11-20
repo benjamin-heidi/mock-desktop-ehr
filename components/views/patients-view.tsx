@@ -66,7 +66,7 @@ export default function PatientsView() {
 
         {/* Patient Detail Panel - Side Panel (when minimized) */}
         {selectedPatient && !isFullscreen && (
-          <div className="w-96 bg-surface border-l border-soft overflow-auto">
+          <div className="w-[500px] bg-surface border-l border-soft overflow-auto">
             <PatientDetail 
               patient={selectedPatient} 
               onClose={handleClose}
