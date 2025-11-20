@@ -97,11 +97,11 @@ export default function CreateBookingModal({ onClose }: CreateBookingModalProps)
               </div>
               <div>
                 <label className="block text-sm font-medium text-neutral-900 mb-2">Duration</label>
-                <select className="w-full px-4 py-2 border border-soft rounded-lg text-sm bg-white">
-                  <option>15 min</option>
-                  <option selected>30 min</option>
-                  <option>45 min</option>
-                  <option>60 min</option>
+                <select className="w-full px-4 py-2 border border-soft rounded-lg text-sm bg-white" defaultValue="30 min">
+                    <option>15 min</option>
+                    <option>30 min</option>
+                    <option>45 min</option>
+                    <option>60 min</option>
                 </select>
               </div>
             </div>

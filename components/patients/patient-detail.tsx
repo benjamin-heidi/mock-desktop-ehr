@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { X } from "lucide-react"
+import { X, Minimize2 } from "lucide-react"
 
 interface Patient {
   id: string
@@ -18,11 +18,13 @@ interface Patient {
 interface PatientDetailProps {
   patient: Patient
   onClose: () => void
+  onMinimize?: () => void
+  isFullscreen?: boolean
 }
 
 type ActiveTab = "summary" | "consultations" | "medications" | "labs"
 
-export default function PatientDetail({ patient, onClose }: PatientDetailProps) {
+export default function PatientDetail({ patient, onClose, onMinimize, isFullscreen = false }: PatientDetailProps) {
   const [activeTab, setActiveTab] = useState<ActiveTab>("summary")
 
   const tabs: Array<{ id: ActiveTab; label: string }> = [
@@ -43,9 +45,24 @@ export default function PatientDetail({ patient, onClose }: PatientDetailProps) 
               {patient.dob} | {patient.age} years | {patient.gender} | {patient.id}
             </p>
           </div>
-          <button onClick={onClose} className="p-1 hover:bg-neutral-100 rounded-lg">
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            {isFullscreen && onMinimize && (
+              <button 
+                onClick={onMinimize} 
+                className="p-1 hover:bg-neutral-100 rounded-lg transition-colors"
+                title="Minimize"
+              >
+                <Minimize2 className="w-5 h-5" />
+              </button>
+            )}
+            <button 
+              onClick={onClose} 
+              className="p-1 hover:bg-neutral-100 rounded-lg transition-colors"
+              title="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Contact Info */}
