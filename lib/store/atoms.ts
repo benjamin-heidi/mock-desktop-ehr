@@ -82,6 +82,29 @@ export const clinicSettingsAtom = atom({
   bufferTime: 5,
 })
 
+// Consultation interface
+export interface Consultation {
+  id: string
+  title: string
+  notes: string
+  timestamp: string // ISO date string
+}
+
+// Medication interface
+export interface Medication {
+  id: string
+  name: string
+  dosage: string
+  duration: string
+  notes: string
+}
+
+// Patient consultations atom - maps patientId to consultations
+export const patientConsultationsAtom = atom<Record<string, Consultation[]>>({})
+
+// Patient medications atom - maps patientId to medications
+export const patientMedicationsAtom = atom<Record<string, Medication[]>>({})
+
 // Patients atom - global state for all patients
 export const patientsAtom = atom<Patient[]>([])
 
